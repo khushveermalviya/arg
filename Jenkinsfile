@@ -9,11 +9,11 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git "${GITHUB_REPO}"
-            }
-        }
+        // stage('Clone Code') {
+        //     steps {
+        //         git "${GITHUB_REPO}"
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
