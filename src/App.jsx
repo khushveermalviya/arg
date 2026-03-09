@@ -31,7 +31,7 @@ function App() {
     },
     {
       id: 3,
-      title: 'AI Chat Application',
+      title: 'AI Chat ssApplication',
       desc: 'Intelligent chatbot with machine learning backend',
       tags: ['React', 'Python', 'ML', 'WebSocket'],
       color: '#6C5B7B'
