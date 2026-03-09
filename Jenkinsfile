@@ -33,11 +33,15 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker push $DOCKER_IMAGE:$BUILD_NUMBER'
-            }
-        }
+   stage('Push Docker Image') {
+    steps {
+        sh '''
+        docker tag $DOCKER_IMAGE:$BUILD_NUMBER $DOCKER_IMAGE:latest
+        docker push $DOCKER_IMAGE:$BUILD_NUMBER
+        docker push $DOCKER_IMAGE:latest
+        '''
+    }
+}
 
         // stage('Update GitOps Repo') {
         //     steps {

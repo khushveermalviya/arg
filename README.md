@@ -5,7 +5,7 @@ A simple portfolio application built with React and Vite, containerized with Doc
 ## Features
 
 - Modern React 18 with Vite
-- Responsive portfolio design
+- Responsive portfolio designasdfsdaf
 - Docker multi-stage build for optimized production
 - Kubernetes deployment with 3 replicas
 - NodePort service for external access
