@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_USERNAME = 'khuhshveer'
-        DOCKER_IMAGE = 'khuhshveer/arg'
+        BACKEND_IMAGE = 'khuhshveer/arg-backend'
+        FRONTEND_IMAGE = 'khuhshveer/arg-frontend'
         GITHUB_REPO = 'https://github.com/khushveermalviya/arg.git'
     }
 
@@ -17,8 +18,11 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE:$BUILD_NUMBER .'
-            }
+        sh '''
+        docker build -f backend.Dockerfile -t $BACKEND_IMAGE:$BUILD_NUMBER .
+        docker build -f frontend.Dockerfile -t $FRONTEND_IMAGE:$BUILD_NUMBER .
+        '''
+    }
         }
 
     stage('Docker Login') {
@@ -36,9 +40,12 @@ pipeline {
    stage('Push Docker Image') {
     steps {
         sh '''
-        docker tag $DOCKER_IMAGE:$BUILD_NUMBER $DOCKER_IMAGE:latest
-        docker push $DOCKER_IMAGE:$BUILD_NUMBER
-        docker push $DOCKER_IMAGE:latest
+        docker tag $BACKEND_IMAGE:$BUILD_NUMBER $BACKEND_IMAGE:latest
+        docker tag $FRONTEND_IMAGE:$BUILD_NUMBER $FRONTEND_IMAGE:latest
+        docker push $BACKEND_IMAGE:$BUILD_NUMBER
+        docker push $BACKEND_IMAGE:latest
+        docker push $FRONTEND_IMAGE:$BUILD_NUMBER
+        docker push $FRONTEND_IMAGE:latest
         '''
     }
 }

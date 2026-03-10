@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: portfolio
+  name: frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: portfolio
+      app: frontend
   template:
     metadata:
       labels:
-        app: portfolio
+        app: frontend
     spec:
       containers:
-      - name: portfolio
-        image: khuhshveer/arg:latest
+      - name: frontend
+        image: khuhshveer/arg-frontend:latest
         ports:
         - containerPort: 80

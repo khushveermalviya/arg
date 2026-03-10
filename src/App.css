@@ -237,6 +237,16 @@ body {
   line-height: 1.6;
 }
 
+.backend-ok {
+  color: #7bd88f;
+  margin-top: -1rem;
+}
+
+.backend-error {
+  color: #ff7f7f;
+  margin-top: -1rem;
+}
+
 .hero-buttons {
   display: flex;
   gap: 1rem;

@@ -5,6 +5,23 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeNav, setActiveNav] = useState('home')
   const [hoveredProject, setHoveredProject] = useState(null)
+  const [backendMessage, setBackendMessage] = useState('Checking backend connection...')
+  const [backendStatus, setBackendStatus] = useState('loading')
+
+  const checkBackend = async () => {
+    try {
+      const response = await fetch('/api/message')
+      if (!response.ok) {
+        throw new Error('Backend request failed')
+      }
+      const data = await response.json()
+      setBackendMessage(data.message)
+      setBackendStatus('connected')
+    } catch (_error) {
+      setBackendMessage('Backend connection failed. Start backend-service and retry.')
+      setBackendStatus('error')
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +30,30 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    checkBackend()
+  }, [])
+
+  if (backendStatus === 'loading') {
+    return (
+      <div className="App" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }}>
+        <p className="hero-subtitle">Checking backend service...</p>
+      </div>
+    )
+  }
+
+  if (backendStatus === 'error') {
+    return (
+      <div className="App" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: '2rem' }}>
+        <div style={{ textAlign: 'center' }}>
+          <h2>Backend service is required</h2>
+          <p className="hero-subtitle">{backendMessage}</p>
+          <button className="btn btn-primary" onClick={checkBackend}>Retry Connection</button>
+        </div>
+      </div>
+    )
+  }
 
   const projects = [
     {
@@ -113,6 +154,9 @@ function App() {
             </h1>
             <p className="hero-subtitle">
               Building beautiful, scalable web experiences with modern technologies
+            </p>
+            <p className={`hero-subtitle ${backendStatus === 'error' ? 'backend-error' : 'backend-ok'}`}>
+              API: {backendMessage}
             </p>
             <div className="hero-buttons">
               <button className="btn btn-primary" onClick={() => scrollToSection('projects')}>
