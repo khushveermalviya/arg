@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/khushveermalviya/gitops-repo.git
+    repoURL: https://github.com/khushveermalviya/arg.git
     targetRevision: main
     path: k8s
   destination:
@@ -16,3 +16,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
